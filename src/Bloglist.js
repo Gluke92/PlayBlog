@@ -1,6 +1,7 @@
-const BlogList = (props) => {
-    const blogs = props.blogs;
-    console.log(props, blogs);
+const BlogList = ({blogs, title}) => {
+    // const blogs = props.blogs;
+    // const title = title.blogs;
+    // destructure directly above
     return (
         <div className="blog-list">
         {blogs.map(blog => (
