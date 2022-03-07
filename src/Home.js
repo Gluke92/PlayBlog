@@ -1,13 +1,13 @@
 import {useEffect, useState} from 'react';
 import BlogList from './Bloglist';
+import useFetch from './useFetch';
 
 const Home = () => {
 
     // let name = 'Devorah';
     // const [name, setName] = useState('Devorah');
     // const [age, setAge] = useState(1.8);
-
-
+    
     // const handleClick = (name) => {
     //     if (name === 'Daddy') {
     //         setName('Devorah');
@@ -20,27 +20,6 @@ const Home = () => {
     //     // name = 'Daddy';
     // }
 
-    const [blogs, setBlogs] = useState(null);
-
-    // const [name, setName] = useState('mario');
-    const [isPending, setIsPending] = useState(true);
-
-    const handleDelete = (id) => {
-        const newBlogs = blogs.filter(blog => blog.id !== id);
-        setBlogs(newBlogs);
-    }
-
-    useEffect(() => {
-        setTimeout(() => {fetch('http://localhost:8000/blogs')
-        .then(res => {
-            return res.json()
-        })
-        .then((data) => {
-            setBlogs(data);
-            setIsPending(false);
-        });
-    }, 1000);
- }, []);
     // useEffect(() => {
     //     console.log('use effect ran');
     //     console.log(name);
@@ -48,10 +27,13 @@ const Home = () => {
     //use whenever you need to run a bit of code at every render of the DOM
     // pass a dependency array to not have uE happen at every consequent render, post initial/first render
     //if you pass a particular variable you want to track in useState, you can limit useEffect to fire only at that dependency changing
+
+    const {data: blogs, isPending, error, handleDelete} = useFetch('http://localhost:8000/blogs');
     return (  
         <div className="home">
+            { error && <div>{error}</div>}
             {isPending && <div>...Loading...</div> }
-            {blogs && <BlogList blogs={blogs} title='All blogs!' handleDelete={handleDelete}/>}
+            {blogs && <BlogList blogs={blogs} title='All blogs!' handleDelete={handleDelete} />}
             {/* <BlogList blogs={blogs.filter((blog) => blog.author === 'mario')} title="Mario's blogs!"/> */}
             {/* <button onClick={() => name === 'mario' ? setName('luigi'): setName('mario')}>change name</button> 
             <p>{name}</p> */}
