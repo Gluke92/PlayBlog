@@ -18,7 +18,9 @@ const useFetch = (url) => {
 
 
     useEffect(() => {
-        setTimeout(() => {fetch(url)
+        const abortCont = new AbortController();
+
+        setTimeout(() => {fetch(url, {signal: abortCont.signal})
         .then(res => {
             if(!res.ok){
                 throw Error('could not fetch the data for that resource');
@@ -29,13 +31,22 @@ const useFetch = (url) => {
             console.log(data);
             setData(data);
             setIsPending(false);
+            setError(null);
         })
             .catch(err => {
+                if (err.name === 'AbortError') {
+                    console.log('error aborted!');
+                } else {
                 setError(err.message);
                 setIsPending(false);
+                }
             })
     }, 1000);
- }, []);
+
+    //cleanup function, to prevent warnings when Home is unmounted, and fetch still runs
+    return () => abortCont.abort();
+    //aborts the fetch associated with it, rather than running it again
+ }, [url]);
 
     return ({data, isPending, error, handleDelete});
 }
