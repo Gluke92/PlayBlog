@@ -6,7 +6,7 @@ import Home from "./Home";
 import Create from "./Create";
 import BlogDetails from "./Blogdetails";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
+import NotFound from "./NotFound";
 
 function App() {
 
@@ -18,12 +18,9 @@ function App() {
           {/* <Home/> */}
           <Switch>
             <Route exact path="/"><Home/></Route>
-          </Switch>
-          <Switch>
             <Route path="/create"><Create/></Route>
-          </Switch>
-          <Switch>
-            <Route exact path="/blogs/:id"><BlogDetails/></Route>
+            <Route path="/blogs/:id"><BlogDetails/></Route>
+            <Route path="*"><NotFound exact path="*"/></Route>       
           </Switch>
         </div>    
       </div>
