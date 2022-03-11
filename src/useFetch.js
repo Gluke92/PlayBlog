@@ -1,3 +1,4 @@
+
 import {useState, useEffect} from 'react';
 
 const useFetch = (url) => {
@@ -25,6 +26,7 @@ const useFetch = (url) => {
             return res.json()
         })
         .then((data) => {
+            console.log(data);
             setData(data);
             setIsPending(false);
         })
@@ -33,7 +35,7 @@ const useFetch = (url) => {
                 setIsPending(false);
             })
     }, 1000);
- }, [url]);
+ }, []);
 
     return ({data, isPending, error, handleDelete});
 }

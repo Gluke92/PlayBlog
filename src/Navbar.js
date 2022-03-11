@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Navbar = () => {
     return (
         <nav className="navbar">
@@ -10,6 +12,7 @@ const Navbar = () => {
             //     backgroundColor: "#57ec77",
             //     borderRadius: '9px'
             // }}
+            //example of inline styling 
             >Create</a>
             {/* <a href="/">Home</a> */}
         </div>
